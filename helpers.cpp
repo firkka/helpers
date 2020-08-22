@@ -1,7 +1,7 @@
         
         
-        int s = rects.size();
+        int s = vect.size();
         for(int i = 0 ; i < s; i++)
         {
-            auto &o = rects[i];
+            auto &o = vect[i];
         }
