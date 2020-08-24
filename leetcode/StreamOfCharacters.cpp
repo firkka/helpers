@@ -1,26 +1,89 @@
-/*
-Implement the StreamChecker class as follows:
-
-    StreamChecker(words): Constructor, init the data structure with the given words.
-    query(letter): returns true if and only if for some k >= 1, the last k characters
-    queried (in order from oldest to newest, including this letter just queried) spell one of the words in the given list.
-
-    Hint create a Trie: reTRIEval!
-*/
-
 class StreamChecker
 {
+  
 private:
-    vector<string> words;
-public:
-    StreamChecker(vector<string>& words) : words(words)
+
+    class TrieNode
     {
+    public:
+         TrieNode* branches[26];
+         bool      isLeaf;
         
+        TrieNode() : isLeaf(false)
+        {
+            for (int i = 0; i < 26; i++)
+            {
+                branches[i] = nullptr; 
+            }
+        }
+
+        TrieNode *createNode(void) 
+        { 
+            struct TrieNode *node =  new TrieNode; 
+
+            node->isLeaf = false; 
+
+            for (int i = 0; i < 26; i++)
+            {
+                node->branches[i] = NULL; 
+            }
+            return node; 
+        }
+        
+        void insert(TrieNode *root, string key) 
+        { 
+            TrieNode *r = root;
+
+            for (int i = 0; i < key.length(); i++)
+            {
+                int index = key[i] - 'a';
+                
+                if (not r->branches[index])
+                {
+                    r->branches[index] = createNode();
+                }
+                r = r->branches[index];
+            }
+            r->isLeaf = true; 
+        } 
+        
+        bool search(TrieNode *root, string key)
+        {
+            TrieNode *node = root;
+
+            for (int i = 0; i < key.length(); i++)
+            {
+                int index = key[i] - 'a';
+                if (not node->branches[index])
+                {
+                    return false;
+                }
+
+                node = node->branches[index];
+            }
+
+            return (node != nullptr && node->isLeaf);
+        }
+    };
+    
+    TrieNode* root;
+
+    public:
+    StreamChecker(vector<string>& words)
+    {
+        root = new TrieNode();
+
+        int n = sizeof(words)/sizeof(words[0]); 
+
+        for (int i = 0; i < n; i++) 
+        {
+            root->insert(root, words[i]);
+        }
     }
     
     bool query(char letter)
     {
-        return false;
+        return root->search(root, letter);
     }
 };
 
@@ -29,3 +92,5 @@ public:
  * StreamChecker* obj = new StreamChecker(words);
  * bool param_1 = obj->query(letter);
  */
+
+// Using Trie, we can search the key in O(M) time
