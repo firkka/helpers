@@ -1,3 +1,26 @@
+// every node will have certain amount of pointers (e.g. num of letters in aplhabet)
+// all node pointers will be set to nullptr in the beginning
+
+// insert function will add words starting from the 'root' node
+// search function will check letter by letter starting from the given node that what are
+
+/*
+                       root
+                    /   \    \
+                    t   a     b
+                    |   |     |
+                    h   n     y
+                    |   |  \  |
+                    e   s  y  e
+                 /  |   |
+                 i  r   w
+                 |  |   |
+                 r  e   e
+                        |
+                        r
+
+*/
+
 class TrieNode
 {
 public:
