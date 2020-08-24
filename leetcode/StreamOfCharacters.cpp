@@ -60,35 +60,3 @@ public:
         return (node != nullptr && node->isLeaf);
     }
 };
-
-
-class StreamChecker
-{
-private:
-    TrieNode* root;
-public:
-    StreamChecker(vector<string>& words)
-    {
-        root = new TrieNode();
-
-        int n = sizeof(words)/sizeof(words[0]); 
-
-        for (int i = 0; i < n; i++) 
-        {
-            root->insert(root, words[i]);
-        }
-    }
-    
-    bool query(char letter)
-    {
-        return root->search(root, letter);
-    }
-};
-
-/**
- * Your StreamChecker object will be instantiated and called as such:
- * StreamChecker* obj = new StreamChecker(words);
- * bool param_1 = obj->query(letter);
- */
-
-// Using Trie, we can search the key in O(M) time
